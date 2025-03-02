@@ -1,0 +1,84 @@
+class Node {
+    int data;
+    Node next;
+
+    public Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+public class LinkedListStack {
+    private Node top; // Top of the stack
+
+    // Constructor to initialize an empty stack
+    public LinkedListStack() {
+        top = null;
+    }
+
+    // Push an element onto the stack
+    public void push(int item) {
+        Node newNode = new Node(item);
+        newNode.next = top;
+        top = newNode;
+    }
+
+    // Pop an element from the stack
+    public int pop() {
+        if (isEmpty()) {
+            System.out.println("Stack is empty. Cannot pop.");
+            return -1; // Return a sentinel value indicating an empty stack
+        }
+        int poppedItem = top.data;
+        top = top.next;
+        return poppedItem;
+    }
+
+    // Peek at the top element of the stack
+    public int peek() {
+        if (isEmpty()) {
+            System.out.println("Stack is empty. Cannot peek.");
+            return -1; // Return a sentinel value indicating an empty stack
+        }
+        return top.data;
+    }
+
+    // Check if the stack is empty
+    public boolean isEmpty() {
+        return top == null;
+    }
+
+    // Display the elements of the stack
+    public void display() {
+        Node current = top;
+        while (current != null) {
+            System.out.print(current.data + " ");
+            current = current.next;
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        LinkedListStack stack = new LinkedListStack();
+
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+
+        System.out.println("Stack elements:");
+        stack.display();
+
+        int poppedItem = stack.pop(); // Popping the top item (3)
+        System.out.println("Popped item: " + poppedItem);
+
+        System.out.println("Stack elements after popping:");
+        stack.display();
+
+        int topItem = stack.peek(); // Peeking at the top item (2)
+        System.out.println("Top item: " + topItem);
+
+        stack.push(4);
+        System.out.println("Stack elements after pushing 4:");
+        stack.display();
+    }
+}
