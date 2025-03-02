@@ -1,0 +1,57 @@
+Rotation
+Right Heavy Tree
+10
+    20
+        30
+first check the BF of right tree of root
+    BF of 20 is (0 - 1) = -1
+        if it is -1, do
+            leftRotation(root)
+
+10
+    20
+30
+    BF of 30 is (1 - 0) = 1
+        if it is +1, do
+            rightRotation(root.right)
+            leftRotation(root)
+
+Left Heavy Tree
+        10
+    20
+30
+if BF of left subtree is (1-0) = 1
+    do
+        rightRotation(root)
+
+    10
+20
+    30
+if BF of left subtree is (0-1) = -1
+    do
+        leftRotation(root.left)
+        rightRotation(root)
+
+                                Implement Rotation
+10      root
+    20      newRoot
+        30
+leftRotate(10)
+    20
+10      30
+
+what if 20 already has left as 15
+10  root
+    20  newRoot
+15      30
+
+
+newRoot = root.right
+root.right = newRoot.left
+newRoot.left = root
+
+reset the height of
+
+    20
+10      30
+    15

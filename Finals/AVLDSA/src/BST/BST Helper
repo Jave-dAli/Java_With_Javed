@@ -1,0 +1,103 @@
+RangeSearch(x, y) returns al elements with keys b/w x and y.
+NearestNeighbor(z) returns the element with keys on either side of z.
+[1, 4, 6, 7, 10, 13, 15]
+RangeSearch(5, 12) --> 6, 7, 10
+NearestNeighbor(3) --> 1, 4
+insert(x)
+delete(x)
+
+
+    // iterative approach
+    public void insert(int value){
+        Node node = new Node(value);
+
+        if(root == null){
+            root = node;
+            return;
+        }
+
+        Node temp = root;
+        Node prev = null;
+        while(temp != null){
+            if(temp.value > value){
+                prev = temp;
+                temp = temp.left;
+            }
+            else if(temp.value < value){
+                prev = temp;
+                temp = temp.right;
+            }
+        }
+    }
+
+    private Node deleteNode(Node root, int key){
+            if(root == null)
+                return root;
+            // recursive calls for ancestors of node to be deleted
+            if(key < root.value) {
+                root.left = deleteNode(root.left, key);
+                return root;
+            }else if(key > root.value){
+                root.right = deleteNode(root.right, key);
+                return root;
+            }
+
+            // we reach here when root is the node to be deleted
+            // if one of the children is empty
+            if(root.left == null)
+                return root.right;
+            else if(root.right == null)
+                return root.left;
+
+                // if both children exist
+            else{
+                Node succParent = root;
+
+                // find successor
+                Node succ = root.right;
+                while(succ.left != null){
+                    succParent = succ;
+                    succ = succ.left;
+                }
+                /*
+                delete successor. Since succ is a/w left child of its parent, we can safely make successor's
+                right right child as left of its parent. If there is no succ, then assign
+                succ.right to succParent.right
+                 */
+                if(succParent != root)
+                    succParent.left = succ.right;
+                else
+                    succParent.right = succ.right;
+
+                // copy succ data to root
+                root.value = succ.value;
+                return root;
+
+            }
+
+        }
+
+            // following is from ApnaCollege
+            private Node apnadelete(Node root, int key){
+                if(key < root.data)
+                    root.left = apnadelete(root.left, key);
+                else if(key > root.data)
+                    root.right = apnadelete(root.right, key);
+                else{
+                    if(root.left == null){
+                        Node temp = root.right;
+                        free(root);
+                        return temp;
+                    }
+                    else if(root.right == null){
+                        Node temp = root.left;
+                        free(root);
+                        return temp;
+                    }
+                    // case-3
+                    Node temp = inorderSucc(root.right);
+                    root.data = temp.data;
+                    root.right = apnadelete(root.right, temp.key);
+                }
+                return root;
+            }
